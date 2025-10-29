@@ -1666,44 +1666,4 @@ YouTube响应体 = type=http-response, pattern=^https:\/\/youtubei\.googleapis\.
  
 
 [MITM]
-hostname = %APPEND% 
-# 哔哩哔哩相关（拦截规则中重点提及）
-grpc.biliapi.net, app.bilibili.com, api.bilibili.com, api.live.bilibili.com, live.bilibili.com, line3-h5-mobile-api.biligame.com,
-# 小红书相关（拦截规则中重点提及）
-so.xiaohongshu.com, www.xiaohongshu.com, edith.xiaohongshu.com, ci.xiaohongshu.com, rec.xiaohongshu.com,
-# 知乎相关（拦截规则中重点提及）
-api.zhihu.com, appcloud2.zhihu.com, m-cloud.zhihu.com, www.zhihu.com, zhuanlan.zhihu.com, link.zhihu.com,
-# 淘宝/闲鱼相关（拦截规则中重点提及）
-acs.m.taobao.com, amdc.m.taobao.com, guide-acs.m.taobao.com, acs.m.goofish.com, g-acs.m.goofish.com, poplayer.template.alibaba.com,
-# 拼多多相关（拦截规则中提及）
-api.pinduoduo.com, mobile.yangkeduo.com, t-dsp.pinduoduo.com,
-# 叮咚买菜相关（拦截规则中重点提及）
-maicai.api.ddxq.mobi, gw.api.ddxq.mobi, user.api.ddxq.mobi,
-# 朴朴超市相关（拦截规则中提及）
-j1.pupuapi.com,
-# 百度系相关（百度、百度地图、百度网盘，拦截规则中重点提及）
-www.baidu.com, newclient.map.baidu.com, pan.baidu.com, tiebac.baidu.com, *.tieba.baidu.com, fcvbjbcebos.baidu.com, issuecdn.baidupcs.com, mime.baidu.com,
-# 阿里云盘相关（拦截规则中提及）
-api.alipan.com, member.alipan.com,
-# 菜鸟裹裹相关（拦截规则中重点提及）
-cn-acs.m.cainiao.com,
-# 顺丰相关（拦截规则中提及）
-mcs-mimp-web.sf-express.com, ucmp.sf-express.com, ccsp-egmas.sf-express.com,
-# 滴滴相关（拦截规则中重点提及）
-conf.diditaxi.com.cn, common.diditaxi.com.cn, daijia.kuaidadi.com, as.xiaojukeji.com, hd.xiaojukeji.com, freight.xiaojukeji.com, capis.didapinche.com, www.didapinche.com,
-# Keep相关（拦截规则中重点提及）
-api.gotokeep.com, kad.gotokeep.com, static1.keepcdn.com,
-# 高德地图相关（拦截规则中提及）
-m*.amap.com, optimus-ads.amap.com,
-# 盒马相关（拦截规则中提及）
-acs-m.freshippo.com,
-# YouTube相关（拦截规则中提及）
-youtubei.googleapis.com, *.googlevideo.com,
-# 大众点评/美团相关（拦截规则中重点提及）
-*.dianping.com, img.meituan.net, p.meituan.com, rms.meituan.com, www.dpfile.com, s3plus.meituan.net, ddplus.meituan.net,
-# 其他拦截规则提及的服务
-iapi.bilibili.com, magev6.if.qidian.com, mage.if.qidian.com, edith.xiaohongshu.com,
-# 广告联盟（拦截规则中提及的穿山甲、优量汇等）
-api-access.pangolin-sdk-toutiao.com, api-access.pangolin-sdk-toutiao1.com, api-access.pangolin-sdk-toutiao-b.com, adx-cn.anythinktech.com,
-# 微信公众号（拦截规则中提及）
-mp.weixin.qq.com
+hostname = %APPEND% grpc.biliapi.net, app.bilibili.com, api.bilibili.com, api.live.bilibili.com, live.bilibili.com, line3-h5-mobile-api.biligame.com, so.xiaohongshu.com, www.xiaohongshu.com, edith.xiaohongshu.com, ci.xiaohongshu.com, rec.xiaohongshu.com, api.zhihu.com, appcloud2.zhihu.com, m-cloud.zhihu.com, www.zhihu.com, zhuanlan.zhihu.com, link.zhihu.com, acs.m.taobao.com, amdc.m.taobao.com, guide-acs.m.taobao.com, acs.m.goofish.com, g-acs.m.goofish.com, poplayer.template.alibaba.com, api.pinduoduo.com, mobile.yangkeduo.com, t-dsp.pinduoduo.com, maicai.api.ddxq.mobi, gw.api.ddxq.mobi, user.api.ddxq.mobi, j1.pupuapi.com, www.baidu.com, newclient.map.baidu.com, pan.baidu.com, tiebac.baidu.com, .tieba.baidu.com, fcvbjbcebos.baidu.com, issuecdn.baidupcs.com, mime.baidu.com, api.alipan.com, member.alipan.com, cn-acs.m.cainiao.com, mcs-mimp-web.sf-express.com, ucmp.sf-express.com, ccsp-egmas.sf-express.com, conf.diditaxi.com.cn, common.diditaxi.com.cn, daijia.kuaidadi.com, as.xiaojukeji.com, hd.xiaojukeji.com, freight.xiaojukeji.com, capis.didapinche.com, www.didapinche.com, api.gotokeep.com, kad.gotokeep.com, static1.keepcdn.com, m.amap.com, optimus-ads.amap.com, acs-m.freshippo.com, youtubei.googleapis.com, *.googlevideo.com, *.dianping.com, img.meituan.net, p.meituan.com, rms.meituan.com, www.dpfile.com, s3plus.meituan.net, ddplus.meituan.net, iapi.bilibili.com, magev6.if.qidian.com, mage.if.qidian.com, api-access.pangolin-sdk-toutiao.com, api-access.pangolin-sdk-toutiao1.com, api-access.pangolin-sdk-toutiao-b.com, adx-cn.anythinktech.com, mp.weixin.qq.com
