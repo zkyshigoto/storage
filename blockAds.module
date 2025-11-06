@@ -8,7 +8,7 @@
 #!tg-channel=https://t.me/inaisi
 #!tag=去广告, fmz200, 奶思
 #!system=ios
-#!date=2025-10-27 19:46:00
+#!date=2025-11-06 16:30:00
 #!remark=下方的所有规则都标注了对应的hostname，可能存在错误或者遗漏，欢迎反馈。对于无法/可选MITM的hostname都特别做了“如开启可自行添加主机名”提示，如果提示后面没有标注主机名则包含所有主机名，否则只包含提示语后面的主机名。
 #!arguments=12306_enable:true,51xyk_enable:true,555_enable:true,albb_enable:true,alyp_enable:true,aiqiyi_enable:true,bdduditu_enable:true,bddutpba_enable:true,bilimanhua_enable:true,blued_enable:true,bohejmkh_enable:true,airborne:true,logLevel:info,cdnngogo_enable:true,cdxb_enable:true,didiiuxk_enable:true,davsdmpk_enable:true,dyls_enable:true,ddmc_enable:true,dshxfg_enable:true,fwke_enable:true,ffbi_enable:true,flightradar24_enable:true,hlzh_enable:true,hema_enable:true,hftx_enable:true,itzj_enable:true,jhsh_enable:true,jkds_enable:true,jkxi_enable:true,glgclmmg_enable:true,kuan_enable:true,keep_enable:true,kuwoybyt_enable:true,kxke_enable:true,lawson_enable:true,lvtusvuftk_enable:true,mafgwo_enable:true,mddjba_enable:true,mdmd_enable:true,mhgotv_enable:true,meiyou_enable:true,pupuicui_enable:true,51job_enable:true,51job_enable:true,quda_enable:true,reddit_enable:true,rfrfuipk_enable:true,smzdm_enable:true,soul_enable:true,tab:true,useractivity:true,sudaxnyr_enable:true,tcbc_enable:true,tgxyxbwf_enable:true,vgtime_enable:true,DT:false,FX:true,MY:true,whyiyyybyt_enable:true,whyiyzdccidm_enable:true,lmjpxmvi_enable:true,wfnibovj_enable:true,xljnuiyivsuvgo_enable:true,xnmh_enable:true,xntuisis_enable:true,xhs_enable:true,xnmiuhig_enable:true,youtube_enable:true,yzxiapp_enable:true,yzku_enable:true,vsgogojihhks_enable:true,vhuhgsjn_enable:true,vihu_enable:true,vrvr_enable:true
 
@@ -191,6 +191,10 @@ https://ios.sspai.com/api/v3/recommend/page/get\?ad.*ios_home_modal - reject
 
 # > 知乎
 ^https:\/\/api\.zhihu\.com\/unlimited\/go\/my_card - reject
+# > 闲鱼 - 开屏广告
+^https?:\/\/(g-)?acs\.m\.goofish\.com\/gw\/mtop.*splash\.ads - reject
+# > 闲鱼 - 开屏通用广告
+^https?:\/\/(g-)?acs\.m\.goofish\.com\/gw\/mtop\.taobao\.idle\.ad\.expose - reject
 # 其他 - 服务器推送配置
 ^https:\/\/api\.zhihu\.com\/ab\/api\/v1\/products\/zhihu\/platforms\/ios\/config - reject
 ^https:\/\/link\.zhihu\.com\/\?target=(?:https?)?(?:%3A|:)?(?:\/\/|%2F%2F)?(.*) http://$1 302
@@ -267,6 +271,29 @@ http-response ^https?:\/\/app-izz\.zhengzhou\.gov\.cn:10019\/bizgw\/gateway\.do 
 http-response ^https:\/\/api\.zhihu\.com\/search\/recommend_query\/v2\? "recommend_queries":\{.+\} "recommend_queries":{}
 http-response ^https?:\/\/app\.zhuanzhuan\.com\/zz\/v2\/zzinfoshow\/getfeedflowinfo\? userRed fmz200
 http-response ^https?:\/\/app\.zhuanzhuan\.com\/zz\/v2\/zzinfoshow\/getchoicegoodsinfos infoData fmz200
+
+# > 闲鱼 - 首页右下角悬浮球
+http-response-jq ^https?:\/\/(g-)?acs\.m\.goofish\.com\/gw\/mtop\.taobao\.idle\.user\.strategy\.list 'del(.data)'
+# > 闲鱼 - 首页顶部Tab
+http-response-jq ^https?:\/\/(g-)?acs\.m\.goofish\.com\/gw\/mtop\.taobao\.idlehome\.home\.circle\.list '.data.circleList |= map(select(.bizCode != "saveMoney"))'
+# > 闲鱼 - 首页信息流
+http-response-jq ^https?:\/\/(g-)?acs\.m\.goofish\.com\/gw\/mtop\.taobao\.idlehome\.home\.nextfresh '.data.homeTopList |= [ .[0] ] | .data.sections |= map(select(.data.bizType == "item"))'
+# > 闲鱼 - 搜索填词
+http-response-jq ^https?:\/\/(g-)?acs\.m\.goofish\.com\/gw\/mtop\.taobao\.idlemtopsearch\.search\.shade 'del(.data)'
+# > 闲鱼 - 猜你可能找
+http-response-jq ^https?:\/\/(g-)?acs\.m\.goofish\.com\/gw\/mtop\.taobao\.idlemtopsearch\.item\.search\.activate '.data.cardList = []'
+# > 闲鱼 - 搜索发现
+http-response-jq ^https?:\/\/(g-)?acs\.m\.goofish\.com\/gw\/mtop\.taobao\.idlemtopsearch\.search\.discover 'del(.data.resultList)'
+# > 闲鱼 - 我的页面
+http-response-jq ^https?:\/\/(g-)?acs\.m\.goofish\.com\/gw\/mtop\.idle\.user\.page\.my\.adapter '.data.ability=[] | .data.container.sections |= map(select(.sectionBizCode | test("head|user|trade")))'
+# > 闲鱼 - 我的页面信息流处理
+http-response-jq ^https?:\/\/(g-)?acs\.m\.goofish\.com\/gw\/mtop\.taobao\.idle\.item\.buy\.feeds 'del(.data.sections)'
+# > 闲鱼 - 本地信息流AD
+http-response-jq ^https?:\/\/(g-)?acs\.m\.goofish\.com\/gw\/mtop\.taobao\.idle\.local\.home '.data.sections |= map(select(.data.bizType == "item"))'
+# > 闲鱼 - 搜索结果信息流AD
+http-response-jq ^https?:\/\/(g-)?acs\.m\.goofish\.com\/gw\/mtop\.taobao\.idlemtopsearch\.search '.data.resultList |= map(select(.data.item.main.clickParam.args.biz_type == "item"))'
+# > 闲鱼 - 商品底部推荐商品信息流AD
+http-response-jq ^https?:\/\/(g-)?acs\.m\.goofish\.com\/gw\/mtop\.taobao\.idle\.item\.recommend '.data.cardList |= map(select(.cardData.bizType != "mamaAD"))'
 
 [Map Local]
 
@@ -479,6 +506,9 @@ http-response ^https?:\/\/app\.zhuanzhuan\.com\/zz\/v2\/zzinfoshow\/getchoicegoo
 # > 什么值得买
 ^https?:\/\/haojia\.m\.smzdm\.com\/detail_modul\/other_modul\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
 
+# > AMDC处理
+^http:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,4}(:\d+)?\/amdc\/mobileDispatch data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+
 
 
 
@@ -659,6 +689,9 @@ Smzdm = type=http-response, pattern=^https?:\/\/qianbao\.smzdm\.com\/v\d\/app\/h
 # 替换信息收集
 req_replace_body = type=http-request, pattern=^https:\/\/data-collector\.soulapp\.cn\/api\/data\/report\/v\d, script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/template/req_replace_body.js, requires-body=true, timeout=60
 
+# > AMDC处理
+AMDC = type=http-response, pattern=^https?:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,4}(:\d+)?\/amdc\/mobileDispatch, script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/amdc.js, requires-body=true, timeout=60
+
 
 # 详情页,小部件
 小红书详情页 = type=http-response, pattern=^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d+\/note\/widgets, script-path=https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js, requires-body=true, timeout=60
@@ -708,4 +741,4 @@ req_replace_body = type=http-request, pattern=^https:\/\/data-collector\.soulapp
 
 
 [MITM]
-hostname = %APPEND% ad.12306.cn, apissl.gifshow.com, apissl.ksapisrv.com, az2-api-js.gifshow.com, az2-api-idc.ksapisrv.com, az2-api.ksapisrv.com, az2-live.ksapisrv.com, az4-api-idc.ksapisrv.com, az4-api.ksapisrv.com, beta-api.crunchyroll.com, beta-luna.douyin.com, capi.douyucdn.cn, capi.lkcoffee.com, client.app.coc.10086.cn, client.tujia.com, cloud.189.cn, common.diditaxi.com.cn, data-collector.soulapp.cn, dyncdn.me, edith.xiaohongshu.com, eleme.com, fuss10.elemecdn.com, gw.api.ddxq.mobi, haojia-api.smzdm.com, haojia.m.smzdm.com, j1.pupuapi.com, lcen.xiaote.net, maicai.api.ddxq.mobi, mage*.if.qidian.com, m.lkcoffee.com, mcs-mimp-web.sf-express.com, mcloud.139.com, mobile.yangkeduo.com, nr-op.elemecdn.com, open-cms-api.quark.cn, open-cms-api.uc.cn, rec.xiaohongshu.com, so.xiaohongshu.com, ucmp.sf-express.com, user.api.ddxq.mobi, webcast-open.douyin.com, waimai-guide.ele.me, www.xiaohongshu.com, xiaoyuzhoufm.com, zhuanlan.zhihu.com
+hostname = %APPEND% acs.m.goofish.com, g-acs.m.goofish.com, ad.12306.cn, apissl.gifshow.com, apissl.ksapisrv.com, az2-api-js.gifshow.com, az2-api-idc.ksapisrv.com, az2-api.ksapisrv.com, az2-live.ksapisrv.com, az4-api-idc.ksapisrv.com, az4-api.ksapisrv.com, beta-api.crunchyroll.com, beta-luna.douyin.com, capi.douyucdn.cn, capi.lkcoffee.com, client.app.coc.10086.cn, client.tujia.com, cloud.189.cn, common.diditaxi.com.cn, data-collector.soulapp.cn, dyncdn.me, edith.xiaohongshu.com, eleme.com, fuss10.elemecdn.com, gw.api.ddxq.mobi, haojia-api.smzdm.com, haojia.m.smzdm.com, iyes.youku.com, j1.pupuapi.com, lcen.xiaote.net, maicai.api.ddxq.mobi, mage*.if.qidian.com, m.lkcoffee.com, mcs-mimp-web.sf-express.com, mcloud.139.com, mobile.yangkeduo.com, nr-op.elemecdn.com, open-cms-api.quark.cn, open-cms-api.uc.cn, rec.xiaohongshu.com, so.xiaohongshu.com, ucmp.sf-express.com, user.api.ddxq.mobi, webcast-open.douyin.com, waimai-guide.ele.me, www.xiaohongshu.com, xiaoyuzhoufm.com, zhuanlan.zhihu.com
