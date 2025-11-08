@@ -76,6 +76,30 @@ IP-CIDR6,2402:4e00:1200:ed00:0:9089:6dac:96b6/128,REJECT,no-resolve
 ^https?:\/\/mime\.baidu\.com\/v\d\/IosStart\/getStartInfo - reject
 ^https?:\/\/mime\.baidu\.com\/v\d\/activity\/advertisement - reject
 
+# > 百度糯米
+^https?:\/\/mbd\.baidu\.com\/newspage\/api\/getmobads\?page\=landingshare - reject
+
+# > 百度网盘
+^https?:\/\/pan\.baidu\.com\/coins\/center\/notice - reject
+^https?:\/\/pan\.baidu\.com\/feed\/hotlist - reject
+^https?:\/\/pan\.baidu\.com\/queryintent\/queryhint - reject
+^https?:\/\/pan\.baidu\.com\/act\/api\/activityentry - reject
+^https?:\/\/pan\.baidu\.com\/act\/v\d\/(bchannel|welfare)\/list - reject
+^https?:\/\/pan\.baidu\.com\/rest\/.*\/pcs\/ad - reject
+^https?:\/\/pan\.baidu\.com\/rest\/2\.0\/pcs\/ad - reject
+
+# > 百度移动广告
+^https?:\/\/mobads\.baidu\.com\/cpro\/ui\/mads\.php - reject
+
+# > 百度文库
+^https?:\/\/appwk\.baidu\.com\/xpage\/interface\/wknaad - reject
+
+# > 百度贴吧
+^https?:\/\/tiebac\.baidu\.com\/c\/f\/ad\/getFeedAd - reject
+
+# > 百度相关
+^https?:\/\/.*baidu\.com\/rest\/.*\/membership\/proxy\/guide - reject
+
 # > 车来了
 ^https?:\/\/pic1\.chelaile\.net\.cn\/adv\/ - reject
 ^https?:\/\/(api|atrace)\.chelaile\.net\.cn\/adpub\/ - reject
@@ -587,6 +611,15 @@ http-response-jq ^https?:\/\/(g-)?acs\.m\.goofish\.com\/gw\/mtop\.taobao\.idle\.
 # > 百度地图
 百度地图广告 = type=http-response, pattern=^https?:\/\/newclient\.map\.baidu\.com\/client\/phpui2\/\?qt=ads, script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/baidumap.js, requires-body=true, timeout=60
 
+# > 百度网盘
+百度网盘广告 = type=http-response, pattern=^https:\/\/pan\.baidu\.com\/feed\/cardinfos, script-path=https://gist.githubusercontent.com/ddgksf2013/f43026707830c7818ee3ba624e383c8d/raw/baiduCloud.adblock.js, requires-body=true, timeout=60
+
+百度网盘广告 = type=http-response, pattern=^https:\/\/pan\.baidu\.com\/rest\/.*\/membership\/user\?method=gamecenter, script-path=https://gist.githubusercontent.com/ddgksf2013/f43026707830c7818ee3ba624e383c8d/raw/baiduCloud.adblock.js, requires-body=true, timeout=60
+
+百度网盘广告 = type=http-response, pattern=^https?:\/\/afd\.baidu\.com\/afd\/entry, script-path=https://gist.githubusercontent.com/ddgksf2013/f43026707830c7818ee3ba624e383c8d/raw/baiduCloud.adblock.js, requires-body=true, timeout=60
+
+百度网盘广告 = type=http-response, pattern=^https?:\/\/pan\.baidu\.com\/api\/getsyscfg, script-path=https://gist.githubusercontent.com/ddgksf2013/f43026707830c7818ee3ba624e383c8d/raw/baiduCloud.adblock.js, requires-body=true, timeout=60
+
 # > 百度贴吧
 百度贴吧广告 = type=http-response, pattern=^http(s:\/\/tiebac|:\/\/c\.tieba)\.baidu\.com\/(c\/f\/(frs\/(page|threadlist|generalTabList)|pb\/page|excellent\/personalized)$|tiebaads\/commonbatch|c\/s\/sync$), script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/tieba-json.js, requires-body=true, timeout=60
 
@@ -741,4 +774,4 @@ AMDC = type=http-response, pattern=^https?:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){
 
 
 [MITM]
-hostname = %APPEND% acs.m.goofish.com, g-acs.m.goofish.com, ad.12306.cn, apissl.gifshow.com, apissl.ksapisrv.com, az2-api-js.gifshow.com, az2-api-idc.ksapisrv.com, az2-api.ksapisrv.com, az2-live.ksapisrv.com, az4-api-idc.ksapisrv.com, az4-api.ksapisrv.com, baidu.com, baidupcs.com, bcebos.com, bdstatic.com, beta-api.crunchyroll.com, beta-luna.douyin.com, capi.douyucdn.cn, capi.lkcoffee.com, client.app.coc.10086.cn, client.tujia.com, cloud.189.cn, common.diditaxi.com.cn, data-collector.soulapp.cn, dyncdn.me, edith.xiaohongshu.com, eleme.com, fuss10.elemecdn.com, gw.api.ddxq.mobi, haojia-api.smzdm.com, haojia.m.smzdm.com, iyes.youku.com, j1.pupuapi.com, lcen.xiaote.net, maicai.api.ddxq.mobi, mage*.if.qidian.com, m.lkcoffee.com, mcs-mimp-web.sf-express.com, mcloud.139.com, mobile.yangkeduo.com, nr-op.elemecdn.com, open-cms-api.quark.cn, open-cms-api.uc.cn, rec.xiaohongshu.com, so.xiaohongshu.com, ucmp.sf-express.com, user.api.ddxq.mobi, webcast-open.douyin.com, waimai-guide.ele.me, www.xiaohongshu.com, xiaoyuzhoufm.com, zhuanlan.zhihu.com
+hostname = %APPEND% acs.m.goofish.com, g-acs.m.goofish.com, ad.12306.cn, apissl.gifshow.com, apissl.ksapisrv.com, az2-api-js.gifshow.com, az2-api-idc.ksapisrv.com, az2-api.ksapisrv.com, az2-live.ksapisrv.com, az4-api-idc.ksapisrv.com, az4-api.ksapisrv.com, appwk.baidu.com, baidu.com, baidupcs.com, bcebos.com, bdstatic.com, mbd.baidu.com, mime.baidu.com, mobads.baidu.com, newclient.map.baidu.com, pan.baidu.com, tiebac.baidu.com, beta-api.crunchyroll.com, beta-luna.douyin.com, capi.douyucdn.cn, capi.lkcoffee.com, client.app.coc.10086.cn, client.tujia.com, cloud.189.cn, common.diditaxi.com.cn, data-collector.soulapp.cn, dyncdn.me, edith.xiaohongshu.com, eleme.com, fuss10.elemecdn.com, gw.api.ddxq.mobi, haojia-api.smzdm.com, haojia.m.smzdm.com, iyes.youku.com, j1.pupuapi.com, lcen.xiaote.net, maicai.api.ddxq.mobi, mage*.if.qidian.com, m.lkcoffee.com, mcs-mimp-web.sf-express.com, mcloud.139.com, mobile.yangkeduo.com, nr-op.elemecdn.com, open-cms-api.quark.cn, open-cms-api.uc.cn, rec.xiaohongshu.com, so.xiaohongshu.com, ucmp.sf-express.com, user.api.ddxq.mobi, webcast-open.douyin.com, waimai-guide.ele.me, www.xiaohongshu.com, xiaoyuzhoufm.com, zhuanfan.zhihu.com
