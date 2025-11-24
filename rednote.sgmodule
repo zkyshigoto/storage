@@ -1,0 +1,90 @@
+#!name=小红书净化+功能增强[墨鱼版]
+#!desc=去除开屏、瀑布流及启动服务广告，屏蔽隐私与青少年请求，去除帖子图片水印、Live 图片水印及短视频水印，功能增强与体验优化
+#!author=@ddgksf2013
+#!homepage=https://t.me/ddgksf2021
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/RED.png
+#!category=去广告
+
+[Rule]
+# 屏蔽 UDP 443 端口（需在 Surge 配置）
+# 请在 [General] 下添加: skip-proxy = %APPEND% *.xiaohongshu.com:443
+
+[MITM]
+hostname = %APPEND% *.xiaohongshu.com
+
+[URL Rewrite]
+# 小红书_搜索广告推荐
+^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/search\/notes\/recommend_info\? - reject-200
+
+# 小红书_通用广告请求
+^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/system_service\/splash - reject-200
+
+# 小红书_通用广告请求
+^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/gslb - reject-200
+
+# 小红书_通用广告请求
+^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/(tag\/)?ads - reject-200
+
+# 小红书_隐私屏蔽
+^https?:\/\/[a-z]+\.xiaohongshu\.com\/v\d+\/stateReport - reject-200
+
+# 小红书_Switches
+^https?:\/\/[a-z]+\.xiaohongshu\.com\/data\/native\/matrix_switches - reject-200
+
+# 小红书_青少年请求
+^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/user\/teenager\/status - reject-200
+
+# 小红书_启动引导
+^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/guide\/home_guide - reject-200
+
+[Script]
+# 小红书_热门视频流
+小红书热门视频流 = type=http-response,pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/note\/tabfeed,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/redbook_json.js
+
+# 小红书_视频保存[new]
+小红书视频保存 = type=http-response,pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/note\/video\/save,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/redbook_json.js
+
+# 小红书_评论区图片处理（默认注释，如需启用请删除行首的#）
+# 小红书评论区图片 = type=http-response,pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/note\/comment\/list,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/redbook_json.js
+
+# 小红书_Live图片去水印
+小红书Live图片 = type=http-response,pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/note\/live_photo\/save,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/redbook_json.js
+
+# 小红书_搜索结果推荐广告
+小红书搜索结果 = type=http-response,pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/search\/notes\?,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/redbook_json.js
+
+# 小红书_视频播放页商品推广
+小红书视频商品推广 = type=http-response,pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/note\/widgets,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/redbook_json.js
+
+# 小红书_短视频流去水印+强制开启保存功能
+小红书短视频流 = type=http-response,pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/note\/redtube\?,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/redbook_json.js
+
+# 小红书_信息流视频去水印+强制开启保存功能
+小红书信息流视频 = type=http-response,pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/note\/videofeed\?,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/redbook_json.js
+
+# 小红书_信息流图片去水印
+小红书信息流图片 = type=http-response,pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/note\/feed\?,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/redbook_json.js
+
+# 小红书_信息流图片[部分用户]去水印
+小红书信息流图片2 = type=http-response,pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/note\/imagefeed,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/redbook_json.js
+
+# 小红书_开屏广告
+小红书开屏广告 = type=http-response,pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/system_service\/splash_config,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/redbook_json.js
+
+# 小红书_首页瀑布流
+小红书首页瀑布流 = type=http-response,pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/homefeed\?,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/redbook_json.js
+
+# 小红书_启动处理
+小红书启动处理 = type=http-response,pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/system_service\/config\?,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/redbook_json.js
+
+# 小红书_热搜发现
+小红书热搜发现 = type=http-response,pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/search\/hot_list,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/redbook_json.js
+
+# 小红书_默认填词
+小红书默认填词 = type=http-response,pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/search\/hint,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/redbook_json.js
+
+# 小红书_去除购物
+小红书去除购物 = type=http-response,pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/homefeed\/categories,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/redbook_json.js
+
+# 小红书_猜你想搜
+小红书猜你想搜 = type=http-response,pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/search\/trending,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/redbook_json.js
