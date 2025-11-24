@@ -3,7 +3,7 @@
 #!author=@ddgksf2013
 #!homepage=https://t.me/ddgksf2021
 #!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/RED.png
-#!category=去广告
+#!category=zky-modified
 
 [General]
 skip-proxy = %APPEND% *.xiaohongshu.com:443
