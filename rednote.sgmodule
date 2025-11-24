@@ -5,9 +5,8 @@
 #!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/RED.png
 #!category=去广告
 
-[Rule]
-# 屏蔽 UDP 443 端口（需在 Surge 配置）
-# 请在 [General] 下添加: skip-proxy = %APPEND% *.xiaohongshu.com:443
+[General]
+skip-proxy = %APPEND% *.xiaohongshu.com:443
 
 [MITM]
 hostname = %APPEND% *.xiaohongshu.com
