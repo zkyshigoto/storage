@@ -1,0 +1,31 @@
+#!name=车来了去广告[墨鱼版]
+#!desc=去除车来了App开屏广告、信息流广告等
+#!author=@ddgksf2013
+#!homepage=https://t.me/ddgksf2021
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bus.png
+#!category=zky-modified
+
+[MITM]
+hostname = %APPEND% web.chelaile.net.cn, api.chelaile.net.cn, atrace.chelaile.net.cn
+
+[URL Rewrite]
+# 开屏广告
+^https?:\/\/api\.chelaile\.net\.cn\/advert\/ - reject
+^https?:\/\/api\.chelaile\.net\.cn\/goocity\/advert\/ - reject
+^https?:\/\/atrace\.chelaile\.net\.cn\/advert\/ - reject
+^https?:\/\/atrace\.chelaile\.net\.cn\/exhibit\?&adv_image - reject
+^https?:\/\/pic1\.chelaile\.net\.cn\/adv\/ - reject
+
+# 首页广告
+^https?:\/\/api\.chelaile\.net\.cn\/tapi\/cardv2\/ - reject
+^https?:\/\/web\.chelaile\.net\.cn\/api\/advert\/ - reject
+
+# 详情页广告
+^https?:\/\/api\.chelaile\.net\.cn\/tapi\/common\/ - reject
+
+[Script]
+# 如果有 JSON 处理脚本
+车来了净化 = type=http-response,pattern=^https?:\/\/api\.chelaile\.net\.cn\/.*,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/master/chelaile.js
+
+# 或使用 jq 处理（如果支持）
+# 车来了广告过滤 = type=http-response,pattern=^https?:\/\/api\.chelaile\.net\.cn\/.*,http-response-jq='walk(if type == "object" and .adv_url then empty else . end)'
