@@ -5,9 +5,7 @@
 #!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Baidu_Tieba.png
 #!category=zky-modified
 
-[Rule]
-# 屏蔽广告 IP
-IP-CIDR,180.76.76.200/32,REJECT
+
 
 [MITM]
 hostname = %APPEND% tieba.baidu.com, tiebac.baidu.com, c.tieba.baidu.com
