@@ -2,6 +2,8 @@
 #!desc=京东App历史价格（商品详情页面触发）折线图
 #!arguments=MMMCK_SCRIPT:捕获令牌
 #!arguments-desc=[参数设置]\n1. MMMCK_SCRIPT: 慢慢买CK获取脚本名称，默认为"捕获令牌"。\n2. 避免不必要的重写或冲突，禁用请设置为 "#"
+#!category=zky-modified
+#!date=2025-12-06 21:53:00
 
 [Script]
 # 获取慢慢买Cookie
